@@ -43,7 +43,7 @@ app.intent('Default Welcome Intent', (conv) => {
   // Asks the user's permission to know their name, for personalization.
   conv.ask( 'Hey!!!! Welcome to Shreyans resume. What do you want to know?');
 
-conv.ask(new Suggestions('About', 'Skills', 'Education','Projects'));
+conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects'));
   });
 
 
@@ -60,26 +60,26 @@ app.intent('About', (conv, {about}) => {
 
     conv.ask(`Here's the image`, new BasicCard(profileMap[i]));
     
-conv.ask(new Suggestions('About', 'Skills', 'Education','Projects')); 
+conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects')); 
 });
 
 
 app.intent('Skills',(conv, {skills})=>{
 	conv.ask("Ring-ding-ding-ding-ding-and-ding-a-wah-a-pah-pah-pah-pah or so I’ve heard.");
-	conv.ask(new Suggestions('About', 'Skills', 'Education','Projects'));
+	conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects'));
 });
 
-app.intent('Education',(conv, {education})=>{
+app.intent('Qualifications',(conv, {qualifications})=>{
 	conv.ask("No way! I like people. Skynet hates people. I rest my case.");
 
-conv.ask(new Suggestions('About', 'Skills', 'Education','Projects'));
+conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects'));
 
 });
 
 app.intent('Projects',(conv, {project})=>{
 	conv.ask("Rajneeti mein kuch sach nahi hota ... yehi iss-kaah sach hai");
 
-	conv.ask(new Suggestions('About', 'Skills', 'Education','Projects'));
+	conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects'));
 
 });
 // Set the DialogflowApp object to handle the HTTPS POST request.
