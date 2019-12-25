@@ -19,6 +19,7 @@ dialogflow,
 Image,
 BasicCard,
 Suggestions,
+Carousel,
 } = require('actions-on-google');
 
 // Import the firebase-functions package for deployment.
@@ -39,11 +40,13 @@ const profileMap = {
 
 // Instantiate the Dialogflow client.
 const app = dialogflow({debug: true});
-app.intent('Default Welcome Intent', (conv) => {
-  // Asks the user's permission to know their name, for personalization.
-  conv.ask( 'Hey!!!! Welcome to Shreyans resume. What do you want to know?');
 
-conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects'));
+
+app.intent('Default Welcome Intent', (conv) => {
+// Welcome the user
+  	conv.ask( 'Hey!!!! Welcome to Shreyans resume. What do you want to know?');
+// Give suggestions to the user
+	conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects'));
   });
 
 
@@ -51,33 +54,58 @@ conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects'));
 // The intent collects a parameter named 'about'.
 app.intent('About', (conv, {about}) => {
 
-    conv.ask('Baaiis tak padhai, pachees pe naukri, chabbish pe chokri, thees pe bachche, saaath pe retirement ....... aur phir mauth ka intezaar ....... dhat aai si ghisi piti life thodi jeena chahta hoon mae');
-
-
+	conv.ask('I am ambitious and driven. I thrive on challenge and constantly set goals for myself, so I have something to strive towards. I’m not comfortable with settling, and I’m always looking for an opportunity to do better. ')
     const i="profile";
 
-    // conv.ask(`i is, ${i}?`);
+    // conv.ask(`Here's the image`, new BasicCard(profileMap[i]));
 
-    conv.ask(`Here's the image`, new BasicCard(profileMap[i]));
+    conv.ask(new BasicCard(profileMap[i]));
     
 conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects')); 
 });
 
 
 app.intent('Skills',(conv, {skills})=>{
-	conv.ask("Ring-ding-ding-ding-ding-and-ding-a-wah-a-pah-pah-pah-pah or so I’ve heard.");
+	conv.ask("I am a Web Developer");
+	conv.ask("On the technical front, i have good command over the following programming languages C, C++, Java, Python, Java, HTML 5, CSS and JavaScript");
+	
 	conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects'));
 });
 
 app.intent('Qualifications',(conv, {qualifications})=>{
-	conv.ask("No way! I like people. Skynet hates people. I rest my case.");
+	conv.ask("Chandigarh University, Chandigarh - BE-CSE");
+	conv.ask("Andhra English School, Jamshedpur - Senior Secondary DBMS English School, Jamshedpur - Secondary");
 
-conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects'));
+	conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects'));
 
 });
+	  const projectInformationCarousel = () => {
+	  const carousel = new Carousel({
+	   items: {
+	     'github repository': {
+	       title: 'Github repository',
+	       synonyms: ['github', 'repository'],
+	       image: new Image({
+	         url: 'https://storage.googleapis.com/material-design/publish/material_v_12/assets/0BxFyKV4eeNjDN1JRbF9ZMHZsa1k/style-color-uiapplication-palette1.png',
+	         alt: 'Open Sources Contibutions',
+	       }),
+	     },
+	     'blue grey coffee': {
+       title: 'Blue Grey Coffee',
+       synonyms: ['blue', 'grey', 'coffee'],
+       image: new Image({
+         url: 'https://storage.googleapis.com/material-design/publish/material_v_12/assets/0BxFyKV4eeNjDZUdpeURtaTUwLUk/style-color-colorsystem-gray-secondary-161116.png',
+         alt: 'Blue Grey Coffee Color',
+       }),
+     },
+	 }});
+	 return carousel;
+	};
 
 app.intent('Projects',(conv, {project})=>{
-	conv.ask("Rajneeti mein kuch sach nahi hota ... yehi iss-kaah sach hai");
+	conv.ask("I love programming and also contribute to open source");
+	if (conv.screen) 
+		return conv.ask(projectInformationCarousel());
 
 	conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects'));
 
