@@ -46,7 +46,7 @@ app.intent('Default Welcome Intent', (conv) => {
 // Welcome the user
   	conv.ask( 'Hey!!!! Welcome to Shreyans resume. What do you want to know?');
 // Give suggestions to the user
-	conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects'));
+	conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects','Exit'));
   });
 
 
@@ -54,29 +54,25 @@ app.intent('Default Welcome Intent', (conv) => {
 // The intent collects a parameter named 'about'.
 app.intent('About', (conv, {about}) => {
 
-	conv.ask('I am ambitious and driven. I thrive on challenge and constantly set goals for myself, so I have something to strive towards. I’m not comfortable with settling, and I’m always looking for an opportunity to do better. ')
+	conv.ask('I am Shreyans Jain, a student of Chandigarh University pursuing BE-CSE. ')
     const i="profile";
-
-    // conv.ask(`Here's the image`, new BasicCard(profileMap[i]));
 
     conv.ask(new BasicCard(profileMap[i]));
     
-conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects')); 
+conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects','Exit')); 
 });
 
 
 app.intent('Skills',(conv, {skills})=>{
-	conv.ask("I am a Web Developer");
-	conv.ask("On the technical front, i have good command over the following programming languages C, C++, Java, Python, Java, HTML 5, CSS and JavaScript");
+	conv.ask("I am a Web Developer \nOn the technical front, I have good command over the various programming languages like \nJava, \nHTML 5, \nCSS and \nJavaScript");
 	
-	conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects'));
+	conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects','Exit'));
 });
 
 app.intent('Qualifications',(conv, {qualifications})=>{
-	conv.ask("Chandigarh University, Chandigarh - BE-CSE");
-	conv.ask("Andhra English School, Jamshedpur - Senior Secondary DBMS English School, Jamshedpur - Secondary");
+	conv.ask("BE-CSE Chandigarh University \nSenior Secondary School Andhra English School \nSecondary School DBMS English School, ");
 
-	conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects'));
+	conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects','Exit'));
 
 });
 	  const projectInformationCarousel = () => {
@@ -86,16 +82,16 @@ app.intent('Qualifications',(conv, {qualifications})=>{
 	       title: 'Github repository',
 	       synonyms: ['github', 'repository'],
 	       image: new Image({
-	         url: 'https://storage.googleapis.com/material-design/publish/material_v_12/assets/0BxFyKV4eeNjDN1JRbF9ZMHZsa1k/style-color-uiapplication-palette1.png',
+	         url: 'https://raw.githubusercontent.com/Shreyans13/Actions-on-google/master/cv-draft-1/resources/images.jpeg',
 	         alt: 'Open Sources Contibutions',
 	       }),
 	     },
-	     'blue grey coffee': {
-       title: 'Blue Grey Coffee',
-       synonyms: ['blue', 'grey', 'coffee'],
+	     'actions on google': {
+       title: 'Actins on google[Resume]',
+       synonyms: ['actions', 'google', 'resumae'],
        image: new Image({
-         url: 'https://storage.googleapis.com/material-design/publish/material_v_12/assets/0BxFyKV4eeNjDZUdpeURtaTUwLUk/style-color-colorsystem-gray-secondary-161116.png',
-         alt: 'Blue Grey Coffee Color',
+         url: 'https://raw.githubusercontent.com/Shreyans13/Actions-on-google/master/cv-draft-1/resources/actionsOnGoogle.jpeg',
+         alt: 'Actins on google[Resume]',
        }),
      },
 	 }});
@@ -103,11 +99,12 @@ app.intent('Qualifications',(conv, {qualifications})=>{
 	};
 
 app.intent('Projects',(conv, {project})=>{
-	conv.ask("I love programming and also contribute to open source");
-	if (conv.screen) 
-		return conv.ask(projectInformationCarousel());
-
-	conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects'));
+	conv.ask("I love programming and also contribute to open source. Here are my projects");
+	
+	if (conv.screen) {
+		 conv.ask(projectInformationCarousel());
+	}
+	conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects','Exit'));
 
 });
 // Set the DialogflowApp object to handle the HTTPS POST request.
