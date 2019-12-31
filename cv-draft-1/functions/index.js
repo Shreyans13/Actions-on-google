@@ -1,15 +1,3 @@
-// Copyright 2018, Google, Inc.
-// Licensed under the Apache License, Version 2.0 (the 'License');
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//  http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an 'AS IS' BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
 
 'use strict';
 
@@ -37,7 +25,17 @@ const profileMap = {
     display: 'WHITE',
   },
 };
-
+const contactMap = {
+  'contactProfile': {
+    title: 'Contact Information',
+    text: 'Shreyans Jain  \nEmail:- Shreyans1313@gmail.com',
+    image: {
+      url: 'https://avatars2.githubusercontent.com/u/58992004?s=400&u=54a495a3893dccf3298ece65abdb2cb0805d8379&v=4',
+      accessibilityText: 'contact image',
+    },
+    display: 'WHITE',
+  },
+};
 // Instantiate the Dialogflow client.
 const app = dialogflow({debug: true});
 
@@ -46,7 +44,7 @@ app.intent('Default Welcome Intent', (conv) => {
 // Welcome the user
   	conv.ask( 'Hey!!!! Welcome to Shreyans resume. What do you want to know?');
 // Give suggestions to the user
-	conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects','Exit'));
+	conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects','Contact','Exit'));
   });
 
 
@@ -59,20 +57,20 @@ app.intent('About', (conv, {about}) => {
 
     conv.ask(new BasicCard(profileMap[i]));
     
-conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects','Exit')); 
+conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects','Contact','Exit')); 
 });
 
 
 app.intent('Skills',(conv, {skills})=>{
 	conv.ask("I am a Web Developer \nOn the technical front, I have good command over the various programming languages like \nJava, \nHTML 5, \nCSS and \nJavaScript");
 	
-	conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects','Exit'));
+	conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects','Contact','Exit'));
 });
 
 app.intent('Qualifications',(conv, {qualifications})=>{
 	conv.ask("BE-CSE Chandigarh University \nSenior Secondary School Andhra English School \nSecondary School DBMS English School, ");
 
-	conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects','Exit'));
+	conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects','Contact','Exit'));
 
 });
 	  const projectInformationCarousel = () => {
@@ -91,7 +89,7 @@ app.intent('Qualifications',(conv, {qualifications})=>{
        synonyms: ['actions', 'google', 'resumae'],
        image: new Image({
          url: 'https://raw.githubusercontent.com/Shreyans13/Actions-on-google/master/cv-draft-1/resources/actionsOnGoogle.jpeg',
-         alt: 'Actins on google[Resume]',
+         alt: 'Actions on google[Resume]',
        }),
      },
 	 }});
@@ -104,8 +102,16 @@ app.intent('Projects',(conv, {project})=>{
 	if (conv.screen) {
 		 conv.ask(projectInformationCarousel());
 	}
-	conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects','Exit'));
+	conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects','Contact','Exit'));
 
+});
+
+app.intent('Contact',(conv, {contact})=>{
+	const y="contactProfile";
+conv.ask('Here`s my contact info',new BasicCard(contactMap[y]));
+  // conv.ask(new BasicCard(contactMap[z]));
+	
+	conv.ask(new Suggestions('About', 'Skills', 'Qualifications','Projects','Contact','Exit'));
 });
 // Set the DialogflowApp object to handle the HTTPS POST request.
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
